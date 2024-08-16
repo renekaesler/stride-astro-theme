@@ -1,0 +1,77 @@
+---
+import "../styles/theme.scss";
+
+import { publicUrl } from "../utils/astro";
+
+// workaround for interpolating public urls inside of stylesheets
+const style = `
+<style>
+  ${[300, 500, 700]
+    .map(
+      (weight) => `
+        @font-face {
+          font-family: "Inter";
+          font-style: normal;
+          font-weight: ${weight};
+          font-display: swap;
+          src:
+            local(""),
+            url(${publicUrl(`/fonts/inter-v12-latin-${weight}.woff2`)}) format("woff2"), /* Chrome 26+, Opera 23+, Firefox 39+ */
+            url(${publicUrl(`/fonts/inter-v12-latin-${weight}.woff`)}) format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+        }
+      `,
+    )
+    .join("")}
+</style>
+`;
+---
+
+<!doctype html>
+<html class="h-100" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,shrink-to-fit=no"
+    />
+    <meta
+      name="description"
+      content="A growing collection of ready to use components for the CSS framework Bootstrap 5"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="img/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="img/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="img/favicon-16x16.png"
+    />
+    <link rel="icon" type="image/png" sizes="96x96" href=".t/img/favicon.png" />
+    <meta name="author" content="Holger Koenemann" />
+    <meta name="generator" content="Eleventy v2.0.0" />
+    <meta name="HandheldFriendly" content="true" />
+    <title>Stride HTML Template - Frontpage one</title>
+
+    <Fragment set:html={style} />
+  </head>
+
+  <body {...Astro.props}>
+    <slot />
+
+    <script>
+      import "bootstrap";
+      import AOS from "aos";
+
+      AOS.init({ duration: 800 });
+    </script>
+  </body>
+</html>

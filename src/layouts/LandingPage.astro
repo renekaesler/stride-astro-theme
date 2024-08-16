@@ -1,0 +1,51 @@
+---
+import { getCollection } from "astro:content";
+
+import "aos/dist/aos.css";
+
+import Navbar from "../components/bootstrap/Navbar.astro";
+import Footer from "../components/Footer.astro";
+
+import Shell from "./Shell.astro";
+
+const { collection = "landing-page" } = Astro.props;
+
+const [sections, templates] = await Promise.all([
+  getCollection(collection),
+  Astro.glob("../components/sections/*.astro").then((modules) => {
+    const entries = modules.map((m) => [m.default.name, m.default]);
+    return Object.fromEntries(entries);
+  }),
+]);
+---
+
+<Shell data-bs-spy="scroll" data-bs-target="#navScroll">
+  <Navbar
+    fixed="top"
+    links={sections
+      .filter(({ data }: any) => !!data.anchor)
+      .map(({ slug, data }: any) => ({
+        label: data.anchor.label,
+        href: `#${slug}`,
+      }))}
+  />
+
+  <main>
+    {
+      sections.map(async (section: any) => {
+        const Section = templates[section.data.template];
+        const { Content } = await section.render();
+
+        return Section ? (
+          <Section slug={section.slug} {...section.data}>
+            <Content />
+          </Section>
+        ) : (
+          <Content />
+        );
+      })
+    }
+  </main>
+
+  <Footer />
+</Shell>

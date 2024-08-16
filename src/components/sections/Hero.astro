@@ -1,0 +1,25 @@
+---
+import { publicUrl } from "../../utils/astro";
+
+const { title, subtitle, backgroundImage } = Astro.props;
+---
+
+<div class="w-100 overflow-hidden bg-gray-100" id="top">
+  <div class="container position-relative">
+    <div
+      class="d-flex justify-content-center col-12 col-lg-8 mt-0 h-100 position-absolute top-0 end-0 bg-cover"
+      data-aos="fade-left"
+      style={{ backgroundImage: `url(${publicUrl(backgroundImage)})` }}
+    >
+    </div>
+
+    <div class="row">
+      <div class="col-lg-7 py-vh-6 position-relative" data-aos="fade-right">
+        <h1 class="display-1 fw-bold mt-5" set:html={title} />
+        <p class="lead" set:html={subtitle} />
+
+        <slot />
+      </div>
+    </div>
+  </div>
+</div>
