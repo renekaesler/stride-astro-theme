@@ -19,4 +19,4 @@ https://renekaesler.github.io/stride-astro-theme/
   - [ ] only import bootstrap features on pages, wher they are used
 - [ ] stylesheet cleanup:
   - [ ] cleanup `_shame.scss` & put the code in the respective componentsdynamicaly)
-  - [ ] remove unnecessary imports in `_bootstrap.scss`
+  - [x] remove unnecessary imports in `_bootstrap.scss`
